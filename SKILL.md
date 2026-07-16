@@ -17,6 +17,46 @@ metadata:
   collection: portfolio-risk-validation
 ---
 
+```json qsh-form
+{
+  "version": 1,
+  "task": {
+    "placeholder": "说明或上传 alpha 信号、收益面板/协方差矩阵、现有权重、行业与暴露约束",
+    "required": true
+  },
+  "fields": [
+    {
+      "key": "objective",
+      "label": "优化目标",
+      "type": "select",
+      "default": "mean_variance",
+      "options": [
+        { "value": "mean_variance", "label": "均值-方差" },
+        { "value": "min_variance", "label": "最小方差" },
+        { "value": "max_sharpe", "label": "最大夏普" },
+        { "value": "risk_parity", "label": "风险平价" },
+        { "value": "max_diversification", "label": "最大分散化" }
+      ]
+    },
+    {
+      "key": "weight_cap",
+      "label": "单资产权重上限",
+      "type": "number",
+      "placeholder": "例如 0.05",
+      "help": "以小数表示，0.05 即 5%"
+    },
+    {
+      "key": "turnover_limit",
+      "label": "换手率上限",
+      "type": "number",
+      "placeholder": "例如 0.30",
+      "help": "仅在提供上一期权重时生效"
+    }
+  ],
+  "prompt_template": "{{#task}}任务与材料：\n{{task}}\n\n{{/task}}{{#attachments}}用户上传的材料（已放入工作区）：\n{{attachments}}\n\n{{/attachments}}把 alpha 信号转化为受约束的目标组合权重，优化目标采用 {{objective}}。{{#weight_cap}}单资产权重上限为 {{weight_cap}}。{{/weight_cap}}{{#turnover_limit}}换手率上限为 {{turnover_limit}}。{{/turnover_limit}}使用正定且稳健的协方差估计，检查行业/因子中性、暴露、换手等约束的可行性与绑定情况，输出权重、风险贡献和求解诊断，不将历史优化结果表述为投资建议，输出中文报告。"
+}
+```
+
 # skill-portfolio-optimize
 
 role: skill · output: target weights + optimisation diagnostics · paradigm: convex portfolio construction
