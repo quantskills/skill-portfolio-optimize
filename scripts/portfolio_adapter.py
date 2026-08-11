@@ -45,6 +45,9 @@ def build_target(factor_panel: dict, market_bars: dict, *, lookback: int, min_ob
     if factor_meta.get("calendar") and factor_meta["calendar"] != bar_meta.get("calendar"): raise ContractError("input calendars must match")
     signatures = {(x["frequency"], x["calendar"], x["adjustment"]) for x in bars}
     if len(signatures) != 1: raise ContractError("bars must share frequency, calendar, and adjustment")
+    factor_frequencies = {x["frequency"] for x in factors}
+    if len(factor_frequencies) != 1 or factor_frequencies.pop() != next(iter(signatures))[0]:
+        raise ContractError("factor and market-bar frequencies must match")
     by_asset: dict[str, list[dict]] = {}
     for bar in bars:
         if _time(bar["timestamp"]) >= signal_time: raise ContractError("bars must be strictly before signal timestamp")
