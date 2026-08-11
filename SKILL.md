@@ -6,15 +6,33 @@ description: >
   weights, or asks about mean-variance / risk-parity / minimum-variance /
   maximum-diversification optimisation, sector-neutral or turnover-limited
   construction. Bridges factor signals and backtesting.
-license: GPL-3.0
-category: 工具
-metadata:
-  organization: QuantSkills
+license: GPL-3.0-only
+quantSkills:
+  organization: quantskills
   organization_url: https://github.com/quantskills
   repository: skill-portfolio-optimize
   repository_url: https://github.com/quantskills/skill-portfolio-optimize
   project_type: skill
-  collection: portfolio-risk-validation
+  schema_version: 2.1.0
+  license: GPL-3.0-only
+  maintainer: abgyjaguo
+  maintainer_type: community
+  catalog: {category: "05", subcategory: 05.portfolio-construction}
+  workflow: {primary_stage: portfolio-construction, workflow_stages: [portfolio-construction]}
+  summary_zh: 将统一方向的因子评分和无前视市场数据转换为可审计的目标组合权重。
+  summary_en: Converts oriented factor scores and point-in-time market bars into auditable target portfolio weights.
+  status: active
+  validation_level: runnable
+  platforms: [cursor, claude-code, codex, hermes, openclaw]
+  interface:
+    mode: structured
+    envelope: {name: quantskills-envelope, version: 1.0.0}
+    inputs:
+      - {profile: factor-panel, version_range: ">=1.0.0 <2.0.0", required: true}
+      - {profile: market-bar, version_range: ">=1.0.0 <2.0.0", required: true}
+    outputs: [{profile: portfolio-target, version: 1.0.0}]
+    adapters: [portfolio-optimize]
+  tags: [portfolio-construction, optimization, factor-panel, market-bar]
 ---
 
 ```json qsh-form
@@ -58,6 +76,12 @@ metadata:
 ```
 
 # skill-portfolio-optimize
+
+Envelope data source: `factor-panel` scores and `market-bar` closes. Assumptions:
+one factor ID, a shared signal timestamp, and aligned pre-signal observations.
+Parameters: `lookback`, `min_observations`, and positive `alpha_scale`. Limitations:
+sample covariance and optimizer feasibility can make a target unavailable. Risk
+boundary: this is research and education only, not investment advice.
 
 role: skill · output: target weights + optimisation diagnostics · paradigm: convex portfolio construction
 
