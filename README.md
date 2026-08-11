@@ -1,5 +1,21 @@
 # skill-portfolio-optimize
 
+[简体中文](README.md) | [English](README.en.md)
+
+## Envelope adapter
+
+For production-style exchange, use `scripts/portfolio_adapter.py` with required
+`factor-panel@1.0.0` and `market-bar@1.0.0` documents. It requires
+`--lookback`, `--min-observations`, and a finite positive `--alpha-scale`; it
+uses only bars strictly before the shared factor timestamp and calls the real
+`optimize_report.build_portfolio` path. Demo/default data fallback is forbidden.
+
+Data source: Envelope `factor-panel` scores and `market-bar` closes. Assumptions:
+one factor ID, one signal timestamp, and aligned pre-signal observations.
+Parameters: `lookback`, `min_observations`, and positive `alpha_scale`. Limitations:
+sample covariance and solver feasibility may prevent a target. Risk boundary: for
+research and education only; not investment advice.
+
 简体中文 | English
 
 把多因子 alpha 信号转成最优组合权重。支持均值方差 / 最小方差 / 最大夏普 / 风险平价 / 最大分散化五种目标，外加个股上限、行业中性、因子暴露中性、换手率约束。补上站内"因子合成 → 回测"之间最大的断层。
