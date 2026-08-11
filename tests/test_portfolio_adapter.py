@@ -45,7 +45,7 @@ class AdapterTests(unittest.TestCase):
         with self.assertRaisesRegex(ContractError, "neutral"): self.build(factor)
         with self.assertRaisesRegex(ContractError, "observations"): self.build(min_observations=5)
     def test_demo_flag_is_not_an_adapter_fallback(self):
-        run = subprocess.run([sys.executable, str(ROOT / "scripts" / "portfolio_adapter.py"), "--demo"], text=True, capture_output=True)
+        run = subprocess.run([sys.executable, str(ROOT / "scripts" / "portfolio_adapter.py"), "--factor-panel", "x", "--market-bars", "x", "--lookback", "2", "--min-observations", "2", "--alpha-scale", "1", "--registry-root", "x", "--out", "x", "--demo"], text=True, capture_output=True)
         self.assertNotEqual(run.returncode, 0)
         self.assertIn("unrecognized arguments: --demo", run.stderr)
 
