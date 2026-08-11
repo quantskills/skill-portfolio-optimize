@@ -1,5 +1,6 @@
 import copy
 import json
+import subprocess
 import sys
 from pathlib import Path
 import unittest
@@ -43,5 +44,9 @@ class AdapterTests(unittest.TestCase):
         factor=copy.deepcopy(self.factor); factor["payload"]["records"][0]["direction"]="neutral"
         with self.assertRaisesRegex(ContractError, "neutral"): self.build(factor)
         with self.assertRaisesRegex(ContractError, "observations"): self.build(min_observations=5)
+    def test_demo_flag_is_not_an_adapter_fallback(self):
+        run = subprocess.run([sys.executable, str(ROOT / "scripts" / "portfolio_adapter.py"), "--demo"], text=True, capture_output=True)
+        self.assertNotEqual(run.returncode, 0)
+        self.assertIn("unrecognized arguments: --demo", run.stderr)
 
 if __name__ == "__main__": unittest.main()
