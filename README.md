@@ -70,3 +70,6 @@ export DEFAULT_USERNAME=...  DEFAULT_PASSWORD=...  JAVA_SERVICE_BASE_URL=...
 ## 许可证
 
 GPL-3.0 · Copyright (C) 2026.
+
+
+Pandadata 兼容维护：[abgyjaguo](https://github.com/abgyjaguo)，保留原项目作者署名。
