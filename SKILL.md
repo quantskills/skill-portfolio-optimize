@@ -6,7 +6,7 @@ description: >
   weights, or asks about mean-variance / risk-parity / minimum-variance /
   maximum-diversification optimisation, sector-neutral or turnover-limited
   construction. Bridges factor signals and backtesting.
-license: GPL-3.0
+license: GPL-3.0-only
 category: 工具
 metadata:
   organization: QuantSkills
@@ -138,3 +138,7 @@ skill-portfolio-optimize/
 - **多空组合锚定**：`full_investment=False` 时，带收益项的目标（mean_var/max_sharpe）用 `net_exposure=0` 做美元中性；纯方差目标（min_var/risk_parity）请用 `full_investment=True` 的多头组合（net=0 不足以锚定方差最小化，会塌缩成 0）。
 - 换手约束 `‖w−w_prev‖₁≤τ` 非光滑，SLSQP 按近似处理；约束紧绑时可能略有偏差。
 - 只做研究/方法论参考，不构成投资建议。
+
+## Pandadata compatibility
+
+[Pandadata 1.0.6 compatibility](references/pandadata-compatibility.md) — exact SDK baseline, validation scope, and shared guidance for all supported agent runtimes.
